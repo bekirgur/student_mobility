@@ -1,0 +1,189 @@
+---
+title: "Student mobility in transition to higher education"
+author: Bekir S. Gür, PhD
+date: July 24, 2022
+output:
+  pdf_document:
+  dev: cairo_pdf
+  html_document:
+  dev: png
+---
+
+# Fulltext of the report is available online at the following link (Raporun tam metnine aşağıdaki bağlantıdan ulaşabilirsiniz):
+# Please cite the report as the following (Rapora şu şekilde atıf yapabilirsiniz):
+Gür, B. S., & Ayaz, N. (2022). Yükseköğretime geçişte öğrenci hareketliliği. Yükseköğretim Kurulu. https://www.yok.gov.tr/Documents/Yayinlar/Yayinlarimiz/2022/yuksekogretime-geciste-ogrenci-hareketliligi.pdf
+
+
+
+```{r required packages / gerekli paketleri yükleme}
+library(readxl)
+library(reshape2)
+library(migest)
+```
+
+
+```{r}
+# Import data as a data frame.
+# Veriyi bir data frame olarak alalım.
+Region <- read_excel("Region.xlsx")
+
+# Use melt() function to convert an object into a molten data frame.
+# melt() fonksiyonunu kullanarak elimizdeki tabloyu liste haline dönüştürelim.
+data_long <- melt(Region)
+
+## OPTIONAL
+# Change variable names from "ikamet/variable" to "origin/destination":
+# Değişken isimlerini "ikamet/variable" yerine "origin/destination" (kaynak/hedef) şeklinde dönüştürmek:
+names(data_long)
+
+names(data_long) <- c("origin", "destination", "value")
+
+# Divide the data by 1,000 and round up. This is because, for example, 240 instead of 240,000 will appear in the graph we will create later. Thus, the graph will appear simpler and clearer.
+# Liste halindeki veriyi 1000'e bölüp yuvarlıyoruz. Bunun nedeni daha sonra oluşturacağımız grafikte örneğin 240,000 yerine 240 görünsün. Böylece, grafik daha sade ve anlaşılır görünsün. 
+data_long$value <- ceiling(data_long$value/1000)
+
+```
+
+
+```{r}
+# mig_chord() helps us for creating a chord diagram for directional origin-destination data. We will use chord diagrams to show students mobility between regions and cities.
+# mig_chord() fonksiyonu kaynak-hedef iller şekline getirilmiş elimizdeki veriyi kolayca grafiğe dökmemize yardım ediyor. Kordon diyagramlarını, öğrencilerin bölgeler ve şehirler arası hareketliliğini göstermek için kullanacağız.
+mig_chord(data_long)
+```
+
+
+```{r}
+# save the image as JPEG.
+# grafiği JPEG olarak kaydedelim.
+
+jpeg(filename = "YKS_yerlestirme.jpeg", width = 1200, height = 1200,
+     pointsize = 14, quality = 300, bg = "transparent")
+mig_chord(data_long)
+dev.off()
+
+```
+
+```{r Chord diagram for students admitted to bachelor programs only / sadece lisans programlarına kabul edilen öğrencileri için kordon diyagramı}
+
+Region_lisans <- read_excel("Region_lisans.xlsx")
+
+data_long_lisans <- melt(Region_lisans)
+
+data_long_lisans$value <- ceiling(data_long_lisans$value/1000)
+
+mig_chord(data_long_lisans)
+
+jpeg(filename = "YKS_yerlestirme_lisans.jpeg", width = 960, height = 960,
+     pointsize = 12, quality = 300, bg = "white")
+mig_chord(data_long_lisans)
+dev.off()
+
+```
+
+
+```{r Chord diagram for students admitted to associate programs only / sadece ön lisans programlarına kabul edilen öğrencileri için kordon diyagramı}
+Region_onlisans <- read_excel("Region_onlisans.xlsx")
+
+data_long_onlisans <- melt(Region_onlisans)
+
+data_long_onlisans$value <- ceiling(data_long_onlisans$value/1000)
+
+mig_chord(data_long_onlisans)
+
+jpeg(filename = "YKS_yerlestirme_onlisans.jpeg", width = 960, height = 960,
+     pointsize = 12, quality = 300, bg = "white")
+mig_chord(data_long_onlisans)
+dev.off()
+
+```
+
+
+```{r Chord diagram for Akdeniz region only / Akdeniz bölgesi için kordon diyagramı}
+
+Akdeniz <- read_excel("Akdeniz.xlsx")
+
+data_long_Akdeniz <- melt(Akdeniz)
+
+jpeg(filename = "YKS_yerlestirme_Akdeniz.jpeg", width = 960, height = 960,
+     pointsize = 12, quality = 300, bg = "white")
+mig_chord(data_long_Akdeniz)
+dev.off()
+
+```
+
+```{r Chord diagram for Southeast region only / Güneydoğu Anadolu bölgesi için kordon diyagramı}
+
+Guneydogu <- read_excel("Guneydogu.xlsx")
+
+data_long_Guneydogu <- melt(Guneydogu)
+
+jpeg(filename = "YKS_yerlestirme_Guneydogu.jpeg", width = 960, height = 960,
+     pointsize = 12, quality = 300, bg = "white")
+mig_chord(data_long_Guneydogu)
+dev.off()
+```
+
+
+```{r Chord diagram for East region only / Doğu Anadolu bölgesi için kordon diyagramı}
+
+Dogu <- read_excel("Dogu.xlsx")
+
+data_long_Dogu <- melt(Dogu)
+
+jpeg(filename = "YKS_yerlestirme_Dogu.jpeg", width = 960, height = 960,
+     pointsize = 12, quality = 300, bg = "white")
+mig_chord(data_long_Dogu)
+dev.off()
+
+```
+
+```{r Chord diagram for Black Sea region only / Karadeniz bölgesi için kordon diyagramı}
+Karadeniz <- read_excel("Karadeniz.xlsx")
+
+data_long_Karadeniz <- melt(Karadeniz)
+
+jpeg(filename = "YKS_yerlestirme_Karadeniz.jpeg", width = 960, height = 960,
+     pointsize = 12, quality = 300, bg = "white")
+mig_chord(data_long_Karadeniz)
+dev.off()
+
+```
+
+```{r Chord diagram for Marmara region only / Marmara bölgesi için kordon diyagramı}
+
+Marmara <- read_excel("Marmara.xlsx")
+
+data_long_Marmara <- melt(Marmara)
+
+jpeg(filename = "YKS_yerlestirme_Marmara.jpeg", width = 960, height = 960,
+     pointsize = 12, quality = 300, bg = "white")
+mig_chord(data_long_Marmara)
+dev.off()
+
+```
+
+```{r Chord diagram for Central Anatolia region only / İç Anadolu bölgesi için kordon diyagramı}
+Icanadolu <- read_excel("Icanadolu.xlsx")
+
+data_long_Icanadolu <- melt(Icanadolu)
+
+jpeg(filename = "YKS_yerlestirme_Icanadolu.jpeg", width = 960, height = 960,
+     pointsize = 12, quality = 300, bg = "white")
+mig_chord(data_long_Icanadolu)
+dev.off()
+
+```
+
+```{r Chord diagram for Aegean region only / Ege bölgesi için kordon diyagramı}
+
+Ege <- read_excel("Ege.xlsx")
+
+data_long_Ege <- melt(Ege)
+
+jpeg(filename = "YKS_yerlestirme_Ege.jpeg", width = 960, height = 960,
+     pointsize = 12, quality = 300, bg = "white")
+mig_chord(data_long_Ege)
+dev.off()
+
+```
+
