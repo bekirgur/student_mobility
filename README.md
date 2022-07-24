@@ -1,10 +1,9 @@
 # Student mobility in transition to higher education
-The data and codes for "Student mobility in transition to higher education," published by the Council of Higher Education, Turkey. [In Turkish]
-
+The data and codes for maps and chord diagrams in "Student mobility in transition to higher education," published by the Council of Higher Education, Turkey. [In Turkish]
 
 
 # Yükseköğretime geçişte öğrenci hareketliliği
-Raporda kullanılan harita ve görseller için gereken veri ve kodlara bu sayfadan ulaşabilirsiniz.
+Raporda kullanılan harita ve kordon diyagramları için gereken veri ve kodlara bu sayfadan ulaşabilirsiniz.
 
 # Reference/Kaynak
 
